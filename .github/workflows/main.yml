@@ -38,6 +38,6 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Build Files 
-          path: 
-          ./rf24n_sim_sender,
-          ./rf24n_sim_receiver
+          path: |
+      rf24n_sim_sender
+      rf24n_sim_receiver

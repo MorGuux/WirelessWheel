@@ -1,61 +1,81 @@
-# This is the name of the workflow, visible on GitHub UI.
-name: Compiler
-
-# Here we tell GitHub to run the workflow when a commit
-# is pushed or a Pull Request is opened.
 on: [push, pull_request]
-
-# This is the list of jobs that will be run concurrently.
-# Since we use a build matrix, the actual number of jobs
-# started depends on how many configurations the matrix
-# will produce.
+name: Compiler
 jobs:
-  # This is the name of the job - can be whatever.
-  test-matrix:
-
-    # Here we tell GitHub that the jobs must be determined
-    # dynamically depending on a matrix configuration.
+  test:
+    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        # The matrix will produce one job for each configuration
-        # parameter of type `arduino-platform`, in this case a
-        # total of 2.
-        arduino-platform: ["arduino:samd", "arduino:avr"]
-        # This is usually optional but we need to statically define the
-        # FQBN of the boards we want to test for each platform. In the
-        # future the CLI might automatically detect and download the core
-        # needed to compile against a certain FQBN, at that point the
-        # following `include` section will be useless.
-        include:
-          # This works like this: when the platformn is "arduino:samd", the
-          # variable `fqbn` is set to "arduino:samd:nano_33_iot".
-          - arduino-platform: "arduino:samd"
-            fqbn: "arduino:samd:nano_33_iot"
-          - arduino-platform: "arduino:avr"
-            fqbn: "arduino:avr:unowifi"
-
-    # This is the platform GitHub will use to run our workflow, we
-    # pick Windows for no particular reason.
-    runs-on: windows-latest
-
-    # This is the list of steps this job will run.
+        sketch:
+          [
+            rf24n_sim_receiver,
+            rf24n_sim_sender,
+          ]
+        board:
+          [
+            "Legion2:avr:leonardoclp"
+          ]
     steps:
-      # First of all, we clone the repo using the `checkout` action.
-      - name: Checkout
-        uses: actions/checkout@master
-
-      # We use the `arduino/setup-arduino-cli` action to install and
-      # configure the Arduino CLI on the system.
-      - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.0.0
-
-      # We then install the platform, which one will be determined
-      # dynamically by the build matrix.
-      - name: Install platform
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
         run: |
           arduino-cli core update-index
-          arduino-cli core install ${{ matrix.arduino-platform }}
-      # Finally, we compile the sketch, using the FQBN that was set
-      # in the build matrix.
-      - name: Compile Sketch
-        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./blink
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Install SparkFun boards
+        if: contains(matrix.board, 'promicro')
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+          arduino-cli core install SparkFun:avr@1.1.5 --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
+      - name: Install CLP Boards
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-cli core install Legion2:avr@0.1.3 --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
+  testUnoMega:
+    name: Test UnoMega ${{ matrix.sketch }} for ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sketch: [HoodLoader2UnoMegaController]
+        board: ["arduino:avr:uno", "arduino:avr:mega:cpu=atmega2560"]
+    steps:
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more
+  test16u2:
+    name: Test 16u2 ${{ matrix.sketch }} for ${{ matrix.board }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sketch: [HoodLoader2CLPBridge]
+        board: ["Legion2:avr:HoodLoader2atmega16u2clp"]
+    steps:
+      - uses: actions/checkout@master
+      - uses: arduino/setup-arduino-cli@v1.0.0
+      - name: Install FastLED
+        run: arduino-cli lib install FastLED@3.2.0
+      - name: Install Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install arduino:avr@1.8.2
+      - name: Install HoodLoader2
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
+          arduino-cli core install HoodLoader2:avr@2.0.5 --additional-urls https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json
+      - name: Install CLP Boards
+        run: |
+          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+          arduino-cli core install Legion2:avr@0.1.3 --additional-urls https://raw.githubusercontent.com/Legion2/CorsairLightingProtocolBoards/master/package_Legion2_CorsairLightingProtocolBoards_index.json
+      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
+        run: arduino-cli compile --fqbn ${{ matrix.board }} ./examples/${{ matrix.sketch }} --libraries ../ --warnings more

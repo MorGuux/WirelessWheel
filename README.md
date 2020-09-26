@@ -22,3 +22,20 @@ NRF24 powered wireless steering wheel, complete with buttons, leds, nextions and
 - [RF24Network](https://github.com/nRF24/RF24Network)
 - [ArduinoJoystickLibrary](https://github.com/MHeironimus/ArduinoJoystickLibrary)
 - [Keypad](https://playground.arduino.cc/Code/Keypad/)
+
+## Intended Use
+
+#### Sender
+
+- HID-compatible Arduino (Pro Micro, Leonardo, Lilypad USB, anything ATMEGA32U4)
+- NRF24L01 module
+
+#### Receiver
+
+- Any Arduino
+- NRF24L01 module
+- Button Matrix
+- Nextion screen
+- WS2812 LEDs
+
+###### Powering can be done via your own method

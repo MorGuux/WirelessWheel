@@ -13,7 +13,7 @@ jobs:
           ]
         board:
           [
-            "Legion2:avr:leonardoclp"
+            "arduino:avr:leonardo"
           ]
     steps:
       - uses: actions/checkout@master
@@ -35,3 +35,7 @@ jobs:
           arduino-cli lib install RF24
       - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
         run: arduino-cli compile --fqbn arduino:avr:leonardo ${{ matrix.sketch }} --libraries ../ --warnings more
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Build Files 
+          path: WirelessWheel

@@ -34,4 +34,4 @@ jobs:
           arduino-cli lib install RF24Network
           arduino-cli lib install RF24
       - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-        run: arduino-cli compile --fqbn ${{ matrix.board }} ${{ matrix.sketch }} --libraries ../ --warnings more
+        run: arduino-cli compile --fqbn arduino:avr:leonardo ${{ matrix.sketch }} --libraries ../ --warnings more

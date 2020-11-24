@@ -2,6 +2,8 @@
 
 ![Compiler](https://github.com/MorGuux/WirelessWheel/workflows/Compiler/badge.svg)
 
+Button matrix testing code (currently functional, just needs porting over to classes)
+
 NRF24 powered wireless steering wheel, complete with buttons, leds, nextions and SimHub support.
 
 ## Hardware Supported

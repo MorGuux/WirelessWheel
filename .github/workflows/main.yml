@@ -10,10 +10,31 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v2
     
+    - name: Checkout FastLED library
+      uses: actions/checkout@v2
+      with:
+        repository: FastLED/FastLED
+        ref: master
+        path: CustomLibrary_FastLED
+    
+    - name: Checkout RF24 library
+      uses: actions/checkout@v2
+      with:
+        repository: nRF24/RF24
+        ref: master
+        path: CustomLibrary_RF24
+
+    - name: Checkout RF24Network library
+      uses: actions/checkout@v2
+      with:
+        repository: nRF24/RF24Network
+        ref: master
+        path: CustomLibrary_RF24Network
+
     - name: Compile Arduino files
       uses: ArminJo/arduino-test-compile@v2
       with:
-        #required-libraries: XBee-Arduino library
+        required-libraries: XBee-Arduino library
         debug-compile: true
         debug-install: true
   

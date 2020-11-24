@@ -34,7 +34,6 @@ jobs:
     - name: Compile Arduino files
       uses: ArminJo/arduino-test-compile@v2
       with:
-        required-libraries: XBee-Arduino library
         debug-compile: true
         debug-install: true
   

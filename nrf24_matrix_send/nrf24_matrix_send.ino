@@ -108,8 +108,6 @@ void setup()
   radio.begin();
   network.begin(90, this_node); //channel, node_address
 
-  //Serial.begin(115200);
-
 }
 
 
@@ -128,9 +126,6 @@ void UpdateButton(int buttonIndex, bool value)
 {
 
   bitWrite(btnData, buttonIndex, value);  //write "value" to "btnData" at position "buttonIndex"
-  
-  //Serial.println(btnData, BIN);
-  //Serial.println(btnData);
   
   RF24NetworkHeader btnHeader(other_node, 'b');   //create header of label "b" for buttons
   network.write(btnHeader, &btnData, sizeof(btnData));

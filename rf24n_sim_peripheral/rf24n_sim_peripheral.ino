@@ -49,6 +49,8 @@ void loop()
 {
   network.update();   // Check the network regularly
 
+  matrix.CheckAllButtons();
+
   while ( network.available() )
   {
 

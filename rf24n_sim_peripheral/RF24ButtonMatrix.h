@@ -17,9 +17,9 @@ class ButtonMatrix
     {
       rotaryInit(); //initialise rotaries
       //initButtonStruct();
+
     }
 
-  private:
     void CheckAllButtons(void)
     {
       if (buttonPad.getKeys())
@@ -43,6 +43,7 @@ class ButtonMatrix
       }
     }
 
+  private:
 
     //byte buttons[NUM_ROWS][NUM_COLS] = {};
 

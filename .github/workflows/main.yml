@@ -16,7 +16,8 @@ jobs:
             "arduino:avr:leonardo"
           ]
     steps:
-      - echo "ACTIONS_ALLOW_UNSECURE_COMMANDS=true" >> $GITHUB_ENV
+      - env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - uses: actions/checkout@master
       - uses: arduino/setup-arduino-cli@v1.0.0
       - name: Install Arduino core

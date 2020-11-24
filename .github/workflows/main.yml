@@ -1,47 +1,20 @@
-on: [push, pull_request]
-name: Compiler
+name: Verify Arduino files
+on: [ push ]
+  
 jobs:
-  test:
-    name: Test ${{ matrix.sketch }} for ${{ matrix.board }}
+  build:
+    name: Verifying compilation of Arduino files
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        sketch:
-          [
-            ./rf24n_sim_receiver/rf24n_sim_receiver,
-            ./rf24n_sim_sender/rf24n_sim_sender
-          ]
-        board:
-          [
-            "arduino:avr:leonardo"
-          ]
+    
     steps:
-      - uses: actions/checkout@master
-      - uses: arduino/setup-arduino-cli@v1.0.0
-      - name: Install Arduino core
-        run: |
-          arduino-cli core update-index
-          arduino-cli core install arduino:avr
-        env: 
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      - name: Install SparkFun boards
-        if: contains(matrix.board, 'promicro')
-        run: |
-          arduino-cli core update-index --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-          arduino-cli core install SparkFun:avr@1.1.5 --additional-urls https://raw.githubusercontent.com/sparkfun/Arduino_Boards/master/IDE_Board_Manager/package_sparkfun_index.json
-      - name: Install FastLED
-        run: arduino-cli lib install FastLED
-      - name: Install RF24 libs
-        run: |
-          arduino-cli lib install RF24Network
-          arduino-cli lib install RF24
-      - name: Build ${{ matrix.sketch }} for ${{ matrix.board }}
-        run: arduino-cli compile --fqbn arduino:avr:leonardo ${{ matrix.sketch }} --libraries ../ --warnings more
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build Files 
-          path: rf24n_sim_sender
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Build Files 
-          path: rf24n_sim_receiver
+    - name: Checkout project
+      uses: actions/checkout@v2
+    
+    - name: Compile Arduino files
+      uses: ArminJo/arduino-test-compile@v2
+      with:
+        #required-libraries: XBee-Arduino library
+        debug-compile: true
+        debug-install: true
+  
+    

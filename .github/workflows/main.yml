@@ -16,14 +16,14 @@ jobs:
             "arduino:avr:leonardo"
           ]
     steps:
-      - env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - uses: actions/checkout@master
       - uses: arduino/setup-arduino-cli@v1.0.0
       - name: Install Arduino core
         run: |
           arduino-cli core update-index
           arduino-cli core install arduino:avr
+        env: 
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       - name: Install SparkFun boards
         if: contains(matrix.board, 'promicro')
         run: |

@@ -24,6 +24,7 @@
 
 #define NUM_BUTTONS 24   //button count
 #define NUM_ROTARIES 4   //rotary count
+//#define HALF_STEP        //half step rotaries
 
 ///BUTTON MAPPING TYPE
 #define BUTTON_MATRIX    //matrixed grid of buttons
@@ -35,8 +36,8 @@
 #define NUM_ROWS 5       //row count
 #define NUM_COLS 5       //column count
 
-const byte ROW_PINS[NUM_ROWS] = {1,2,3,4,5};  //pin assignments for rows and columns
-const byte COL_PINS[NUM_COLS] = {6,7,8,9,10};
+const byte ROW_PINS[NUM_ROWS] = {1, 2, 3, 4, 5}; //pin assignments for rows and columns
+const byte COL_PINS[NUM_COLS] = {6, 7, 8, 9, 10};
 
 #endif
 

@@ -19,7 +19,7 @@ class LED
       FastLED.clear();
       FastLED.show();   //clear all LEDs
     }
-    
+
     void receiveLEDS(RF24NetworkHeader& header)
     {
       byte ledData[NUM_LEDS * 3];
@@ -37,9 +37,9 @@ class LED
 
     void sendLEDs()
     {
-        int ledLC = Serial.readBytesUntil('\n', ledData, sizeof(ledData));
-        RF24NetworkHeader ledReader(PERIPHERAL_ADDRESS, 'l'); //"l" packet for LEDs
-        network.write(ledReader, &ledData, sizeof(ledData));
+      int ledLC = Serial.readBytesUntil('\n', ledData, sizeof(ledData));
+      RF24NetworkHeader ledReader(PERIPHERAL_ADDRESS, 'l'); //"l" packet for LEDs
+      network.write(ledReader, &ledData, sizeof(ledData));
     }
   private:
     CRGB leds[NUM_LEDS];

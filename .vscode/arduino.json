@@ -1,6 +1,6 @@
 {
     "board": "arduino:avr:leonardo",
-    "sketch": "rf24n_sim_sender\\rf24n_sim_sender.ino",
+    "sketch": "rf24n_sim_peripheral\\rf24n_sim_peripheral.ino",
     "programmer": "AVRISP mkII",
     "port": "COM5"
 }

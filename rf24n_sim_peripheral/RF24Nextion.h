@@ -16,7 +16,7 @@ class Nextion
     {
       //set up serial connection
     }
-    
+
     void receiveNextion(RF24NetworkHeader& header)
     {
       network.read(header, &nexData, sizeof(nexData));

@@ -37,4 +37,8 @@ jobs:
         debug-compile: true
         debug-install: true
   
-    
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build_output
+        path: / # or path/to/artifact

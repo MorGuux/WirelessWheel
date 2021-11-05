@@ -1,6 +1,6 @@
 # WirelessWheel
 
-![Compiler](https://github.com/MorGuux/WirelessWheel/workflows/Compiler/badge.svg)
+[![Verify Arduino files](https://github.com/MorGuux/WirelessWheel/actions/workflows/main.yml/badge.svg)](https://github.com/MorGuux/WirelessWheel/actions/workflows/main.yml)
 
 NRF24 powered wireless steering wheel, complete with buttons, leds, nextions and SimHub support.
 

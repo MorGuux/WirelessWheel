@@ -9,52 +9,28 @@ jobs:
     steps:
     - name: Checkout project
       uses: actions/checkout@v2
-    
-    - name: Checkout FastLED library
-      uses: actions/checkout@v2
-      with:
-        repository: FastLED/FastLED
-        ref: master
-        path: CustomLibrary_FastLED
-    
-    - name: Checkout RF24 library
-      uses: actions/checkout@v2
-      with:
-        repository: nRF24/RF24
-        ref: master
-        path: CustomLibrary_RF24
-
-    - name: Checkout RF24Network library
-      uses: actions/checkout@v2
-      with:
-        repository: nRF24/RF24Network
-        ref: master
-        path: CustomLibrary_RF24Network
-
-    - name: Checkout Joystick library
-      uses: actions/checkout@v2
-      with:
-        repository: MHeironimus/ArduinoJoystickLibrary
-        ref: master
-        path: CustomLibrary_ArduinoJoystickLibrary
 
     - name: Compile Arduino Sketches
       uses: arduino/compile-sketches@v1.0.0
       with:
         fqbn: "arduino:avr:leonardo"
+        enable-warnings-report: true
         sketch-paths: |
           "rf24n_sim_host"
           "rf24n_sim_peripheral"
         libraries: |
           - name: Keypad
-          - source-path: CustomLibrary_FastLED
-          - source-path: CustomLibrary_RF24
-          - source-path: CustomLibrary_RF24Network
-          - source-path: CustomLibrary_ArduinoJoystickLibrary
+          - source-url: FastLED/FastLED.git
+          - source-url: nRF24/RF24.git
+          - source-url: RF24Network.git
+          - source-url: MHeironimus/ArduinoJoystickLibrary.git
+        cli-compile-flags: |
+          - --export-binaries
+          - --output-dir "./build"
         
   
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2
       with:
         name: build_output
-        path: ./ # or path/to/artifact
+        path: ./build # or path/to/artifact

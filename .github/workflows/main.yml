@@ -26,7 +26,7 @@ jobs:
           - source-url: https://github.com/MHeironimus/ArduinoJoystickLibrary.git
         cli-compile-flags: |
           - --export-binaries
-          - --output-dir "./build"
+          - --output-dir="./build"
         
   
     - name: Upload Artifacts

@@ -42,6 +42,9 @@ jobs:
       uses: arduino/compile-sketches@v1.0.0
       with:
         fqbn: "arduino:avr:leonardo"
+        sketch-paths: |
+          "rf24n_sim_host"
+          "rf24n_sim_peripheral"
         libraries: |
           - name: Keypad
           - source-path: CustomLibrary_FastLED

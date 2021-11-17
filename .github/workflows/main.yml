@@ -38,12 +38,17 @@ jobs:
         ref: master
         path: CustomLibrary_ArduinoJoystickLibrary
 
-    - name: Compile Arduino files
-      uses: ArminJo/arduino-test-compile@v3.0.0
+    - name: Compile Arduino Sketches
+      uses: arduino/compile-sketches@v1.0.0
       with:
-        debug-compile: true
-        debug-install: true
-        arduino-board-fqbn: arduino:avr:leonardo
+        fqbn: "arduino:avr:leonardo"
+        libraries: |
+          - name: Keypad
+          - source-path: CustomLibrary_FastLED
+          - source-path: CustomLibrary_RF24
+          - source-path: CustomLibrary_RF24Network
+          - source-path: CustomLibrary_ArduinoJoystickLibrary
+        
   
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2

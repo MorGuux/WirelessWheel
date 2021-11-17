@@ -32,10 +32,11 @@ jobs:
         path: CustomLibrary_RF24Network
 
     - name: Compile Arduino files
-      uses: ArminJo/arduino-test-compile@v2
+      uses: ArminJo/arduino-test-compile@v3.0.0
       with:
         debug-compile: true
         debug-install: true
+        arduino-board-fqbn: leonardo
   
     - name: Upload Artifacts
       uses: actions/upload-artifact@v2

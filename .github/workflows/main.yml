@@ -20,10 +20,10 @@ jobs:
           "rf24n_sim_peripheral"
         libraries: |
           - name: Keypad
-          - source-url: git@github.com:FastLED/FastLED.git
-          - source-url: git@github.com:nRF24/RF24.git
-          - source-url: git@github.com:RF24Network.git
-          - source-url: git@github.com:MHeironimus/ArduinoJoystickLibrary.git
+          - source-url: https://github.com/FastLED/FastLED.git
+          - source-url: https://github.com/nRF24/RF24.git
+          - source-url: https://github.com/RF24Network.git
+          - source-url: https://github.com/MHeironimus/ArduinoJoystickLibrary.git
         cli-compile-flags: |
           - --export-binaries
           - --output-dir "./build"

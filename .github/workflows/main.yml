@@ -31,6 +31,13 @@ jobs:
         ref: master
         path: CustomLibrary_RF24Network
 
+    - name: Checkout Joystick library
+      uses: actions/checkout@v2
+      with:
+        repository: MHeironimus/ArduinoJoystickLibrary
+        ref: master
+        path: CustomLibrary_ArduinoJoystickLibrary
+
     - name: Compile Arduino files
       uses: ArminJo/arduino-test-compile@v3.0.0
       with:

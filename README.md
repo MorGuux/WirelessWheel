@@ -2,8 +2,6 @@
 
 [![Verify Arduino files](https://github.com/MorGuux/WirelessWheel/actions/workflows/main.yml/badge.svg)](https://github.com/MorGuux/WirelessWheel/actions/workflows/main.yml)
 
-## NIGHTLY BUILD, CAN BE BROKEN, DO NOT COMPILE AND USE ON AN ARDUINO
-
 NRF24 powered wireless steering wheel, complete with buttons, leds, nextions and SimHub support.
 
 ## Hardware Supported
